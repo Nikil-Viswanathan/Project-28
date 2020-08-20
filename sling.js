@@ -20,6 +20,9 @@ class SlingShot{
             line(pointA.x, pointA.y, pointB.x, pointB.y);
         }
     }
+    attach(body){
+        this.sling.bodyA = body;
+    }
  fly(){
      this.sling.bodyA = null;
  }   

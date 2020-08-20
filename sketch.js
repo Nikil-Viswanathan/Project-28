@@ -25,10 +25,10 @@ function setup() {
 stone = new Stone(115 , 570 , 10 , 10);
 
 	boy = Bodies.rectangle(150 , 620 , 80 , 100 , {isStatic:true})
-	tree = Bodies.rectangle(500, 600 , 50, 50);
-	mango1 = new Mango(444 , 463 ,50 , 50);
-	mango2 = new Mango( 544 , 559 , 50 , 50);
-	mango3 = new Mango(356 ,578 , 50 , 50 );
+	tree = Bodies.rectangle(600, 600 , 50, 50);
+	mango1 = new Mango(550 , 463 ,50 , 50);
+	mango2 = new Mango( 644 , 559 , 50 , 50);
+	mango3 = new Mango(456 ,578 , 50 , 50 );
 	sling = new SlingShot(stone.body,{x:102, y:570});
   World.add(world , boy);
 }
@@ -39,8 +39,9 @@ function draw() {
   background("white");
   Engine.update(engine);
   ground.display();
-  
-
+  detectCollision(stone , mango1);
+  detectCollision(stone , mango2);
+  detectCollision(stone , mango3);
  imageMode(CENTER);
  image(img , boy.position.x , boy.position.y , 150 , 200);
  image(img2 , tree.position.x , boy.position.y , 500 , 500);
@@ -63,7 +64,7 @@ function mouseDragged(){
 function mouseReleased(){
 	sling.fly();
 }
-function detectCollision(stone1 , mango1){
+/*function detectCollision(stone1 , mango1){
 	mangoBodyPosition = mango1.body.position;
 	stoneBodyPosition = stone1.body.position;
 	var distance = dist(stoneBodyPosition.x , stoneBodyPosition.y , mangoBodyPosition.x , mangoBodyPosition.y)
@@ -71,4 +72,19 @@ function detectCollision(stone1 , mango1){
 	{
 		Matter.Body.setStatic(mango1.body,false);
 	}
+}*/
+function detectCollision(s1 , m1){
+	if(s1.body.position.x - m1.body.position.x < 50 && 
+		m1.body.position.x - s1.body.position.x < 50 &&
+		m1.body.position.y - s1.body.position.y < 50 && 
+		s1.body.position.y - m1.body.position.y < 50){
+			Matter.Body.setStatic(m1.body , false)
+		}
+}
+function keyPressed(){
+    if(keyCode === 32){
+       sling.attach(stone.body);
+       Matter.Body.setPosition(stone.body,{x:115 , y:570});
+     
+    }
 }
